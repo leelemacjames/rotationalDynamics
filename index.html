@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IB Physics HL: Rotational Dynamics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 1.1em;
+            transition: all 0.3s;
+        }
+        
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+        
+        .nav-tab.active {
+            background: white;
+            border-bottom: 3px solid #f093fb;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .theory-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #f093fb;
+        }
+        
+        .theory-section h2 {
+            color: #f5576c;
+            margin-bottom: 15px;
+        }
+        
+        .formula {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        
+        .canvas-container {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        canvas {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 100%;
+        }
+        
+        .controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+        
+        input[type="range"] {
+            width: 300px;
+            vertical-align: middle;
+        }
+        
+        button {
+            background: #f093fb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #f5576c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #f093fb;
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .question-number {
+            background: #f093fb;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            margin: 15px 0;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .options {
+            margin: 20px 0;
+        }
+        
+        .option {
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: #e9ecef;
+            border-color: #f093fb;
+        }
+        
+        .option.selected {
+            background: #fce4ec;
+            border-color: #f093fb;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .hint-box, .answer-box {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .hint-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+        }
+        
+        .hint-box.show {
+            display: block;
+        }
+        
+        .answer-box {
+            background: #d4edda;
+            border: 1px solid #28a745;
+        }
+        
+        .answer-box.show {
+            display: block;
+        }
+        
+        .button-group {
+            margin: 15px 0;
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #0c5460;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .key-concept {
+            background: linear-gradient(135deg, #f093fb22 0%, #f5576c22 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #f093fb;
+        }
+        
+        .score-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            font-weight: bold;
+            z-index: 1000;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            text-align: left;
+        }
+        
+        th {
+            background: #f093fb;
+            color: white;
+        }
+        
+        .comparison-table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .control-group label {
+                width: 100%;
+                display: block;
+                margin-bottom: 5px;
+            }
+            
+            input[type="range"] {
+                width: 100%;
+            }
+            
+            .score-display {
+                position: static;
+                margin: 20px auto;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Rotational Dynamics</h1>
+            <p>IB Physics HL Interactive Learning Tool</p>
+        </header>
+        
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('theory')">📚 Theory</button>
+            <button class="nav-tab" onclick="showTab('visualizations')">🎨 Visualizations</button>
+            <button class="nav-tab" onclick="showTab('practice')">✏️ Practice Questions</button>
+        </div>
+        
+        <div class="content">
+            <!-- THEORY TAB -->
+            <div id="theory" class="tab-content active">
+                <h1 style="color: #f5576c; margin-bottom: 20px;">Fundamental Concepts</h1>
+                
+                <div class="theory-section">
+                    <h2>1. Rotational Kinematics - The Angular Analogues</h2>
+                    <p>Rotational motion parallels linear motion with angular quantities:</p>
+                    
+                    <div class="comparison-table">
+                        <table>
+                            <tr>
+                                <th>Linear</th>
+                                <th>Angular</th>
+                                <th>Relationship</th>
+                            </tr>
+                            <tr>
+                                <td>Position: x</td>
+                                <td>Angle: θ (rad)</td>
+                                <td>s = rθ</td>
+                            </tr>
+                            <tr>
+                                <td>Velocity: v (m/s)</td>
+                                <td>Angular velocity: ω (rad/s)</td>
+                                <td>v = rω</td>
+                            </tr>
+                            <tr>
+                                <td>Acceleration: a (m/s²)</td>
+                                <td>Angular acceleration: α (rad/s²)</td>
+                                <td>a = rα</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <h3 style="margin-top: 20px;">Rotational Kinematics Equations:</h3>
+                    <div class="formula">
+                        ω = ω₀ + αt<br>
+                        θ = ω₀t + ½αt²<br>
+                        ω² = ω₀² + 2αθ
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Key Insight:</strong> These are identical in form to the linear SUVAT equations, with θ↔s, ω↔v, α↔a.
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>2. Moment of Inertia (I)</h2>
+                    <p>Moment of inertia is the rotational analogue of mass - it measures resistance to angular acceleration.</p>
+                    
+                    <div class="formula">
+                        I = Σ mᵢrᵢ² (for point masses)<br><br>
+                        I = ∫ r² dm (for continuous bodies)
+                    </div>
+                    
+                    <h3 style="margin-top: 20px;">Common Moments of Inertia:</h3>
+                    <div class="comparison-table">
+                        <table>
+                            <tr>
+                                <th>Object</th>
+                                <th>Axis</th>
+                                <th>Moment of Inertia</th>
+                            </tr>
+                            <tr>
+                                <td>Point mass</td>
+                                <td>Distance r from axis</td>
+                                <td>I = mr²</td>
+                            </tr>
+                            <tr>
+                                <td>Solid cylinder/disk</td>
+                                <td>Through center</td>
+                                <td>I = ½MR²</td>
+                            </tr>
+                            <tr>
+                                <td>Hollow cylinder</td>
+                                <td>Through center</td>
+                                <td>I = MR²</td>
+                            </tr>
+                            <tr>
+                                <td>Solid sphere</td>
+                                <td>Through center</td>
+                                <td>I = ⅖MR²</td>
+                            </tr>
+                            <tr>
+                                <td>Thin rod</td>
+                                <td>Through center ⊥ to rod</td>
+                                <td>I = 1/12 ML²</td>
+                            </tr>
+                            <tr>
+                                <td>Thin rod</td>
+                                <td>Through end ⊥ to rod</td>
+                                <td>I = ⅓ML²</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>Important:</strong> For two point masses m separated by distance d on opposite sides of an axis at the center: I = 2m(d/2)² = md²/2
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>3. Torque (τ) and Angular Dynamics</h2>
+                    <p>Torque is the rotational analogue of force.</p>
+                    
+                    <div class="formula">
+                        τ = rF sin θ = r⊥F = rF⊥<br><br>
+                        τ = Iα (Newton's 2nd Law for rotation)
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Key Points:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Torque depends on perpendicular distance and perpendicular force component</li>
+                            <li>Net torque causes angular acceleration: Στ = Iα</li>
+                            <li>For a couple (two equal & opposite forces): τ = Fd</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>4. Angular Momentum (L)</h2>
+                    <p>Angular momentum is the rotational analogue of linear momentum.</p>
+                    
+                    <div class="formula">
+                        L = Iω (for rigid body rotation)<br><br>
+                        L = mvr sin θ = r × p (for point mass)
+                    </div>
+                    
+                    <h3 style="margin-top: 20px;">Conservation of Angular Momentum:</h3>
+                    <div class="formula">
+                        If Στ = 0, then L = constant<br>
+                        I₁ω₁ = I₂ω₂
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Applications:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>Ice skater pulling arms in (I↓ → ω↑)</li>
+                            <li>Diver tucking for spins</li>
+                            <li>Planetary orbits (r↓ → v↑)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>5. Angular Impulse</h2>
+                    <p>Angular impulse is the change in angular momentum, caused by a torque acting over time.</p>
+                    
+                    <div class="formula">
+                        Angular Impulse = ∫ τ dt = ΔL = Iω_f - Iω_i<br><br>
+                        For constant torque: τΔt = ΔL
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>Units:</strong> Angular momentum L has units kg·m²·s⁻¹ (or equivalently N·m·s or J·s)<br>
+                        Angular impulse has the same units.
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Sign Convention:</strong> When rotation changes direction, be careful with signs!<br>
+                        Example: ω changes from +15 rad/s to -25 rad/s → Δω = -25 - (+15) = -40 rad/s
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>6. Rotational Kinetic Energy</h2>
+                    <p>A rotating object has kinetic energy due to its rotation.</p>
+                    
+                    <div class="formula">
+                        KE_rot = ½Iω²
+                    </div>
+                    
+                    <h3 style="margin-top: 20px;">Rolling Motion:</h3>
+                    <p>For an object rolling without slipping (v = ωr), the total kinetic energy is:</p>
+                    <div class="formula">
+                        KE_total = KE_trans + KE_rot<br>
+                        KE_total = ½Mv² + ½Iω²<br>
+                        KE_total = ½Mv² + ½I(v/r)²
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Energy Distribution:</strong><br>
+                        The ratio of rotational to translational KE depends on the moment of inertia:<br>
+                        For a solid cylinder (I = ½MR²): KE_rot/KE_trans = (½MR² × v²/R²)/(Mv²) = ½M/M = 1/2<br>
+                        So rotational KE is half the translational KE.
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>7. Rolling Down an Incline</h2>
+                    <p>When an object rolls without slipping down an incline, energy conservation gives:</p>
+                    
+                    <div class="formula">
+                        mgh = ½Mv² + ½Iω²<br>
+                        mgh = ½Mv² + ½I(v/R)²<br>
+                        mgh = ½Mv²(1 + I/(MR²))
+                    </div>
+                    
+                    <div class="formula">
+                        v = √(2gh/(1 + I/(MR²)))
+                    </div>
+                    
+                    <div class="info-box">
+                        <strong>For a solid cylinder</strong> (I = ½MR²):<br>
+                        v = √(2gh/(1 + ½)) = √(4gh/3)<br>
+                        Therefore: h = 3v²/(4g)
+                    </div>
+                </div>
+                
+                <div class="theory-section">
+                    <h2>8. Key Problem-Solving Strategies</h2>
+                    
+                    <div class="key-concept">
+                        <strong>Angular Momentum & Energy Problems:</strong>
+                        <ol style="margin-left: 20px; margin-top: 10px;">
+                            <li>L = Iω → If you know KE = ½Iω², you can find L = √(2I×KE)</li>
+                            <li>For objects with same KE: L_X/L_Y = √(I_X/I_Y)</li>
+                            <li>ω² = ω₀² + 2αθ → Use when you need to find angular displacement</li>
+                            <li>Remember: 1 revolution = 2π radians</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="key-concept">
+                        <strong>Common Pitfalls:</strong>
+                        <ul style="margin-left: 20px; margin-top: 10px;">
+                            <li>⚠️ Don't confuse I with MR² - check the coefficient!</li>
+                            <li>⚠️ For rolling: total mass M vs wheel mass m</li>
+                            <li>⚠️ Angular impulse: watch signs when direction reverses</li>
+                            <li>⚠️ Torque from couples: τ = F × d (perpendicular distance between forces)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VISUALIZATIONS TAB -->
+            <div id="visualizations" class="tab-content">
+                <h1 style="color: #f5576c; margin-bottom: 20px;">Interactive Visualizations</h1>
+                
+                <!-- Rotation Visualization -->
+                <div class="canvas-container">
+                    <h2>Rotating Disk with Torque</h2>
+                    <canvas id="rotationCanvas" width="600" height="600"></canvas>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>Torque (τ):</label>
+                            <input type="range" id="torque" min="-5" max="5" step="0.5" value="1" oninput="updateRotationLabel()">
+                            <span id="torqueValue">1.0</span> N·m
+                        </div>
+                        <div class="control-group">
+                            <label>Moment of Inertia:</label>
+                            <input type="range" id="inertia" min="0.5" max="5" step="0.5" value="2" oninput="updateRotationLabel()">
+                            <span id="inertiaValue">2.0</span> kg·m²
+                        </div>
+                        <button onclick="toggleRotationAnimation()">⏯ Play/Pause</button>
+                        <button onclick="resetRotation()">🔄 Reset</button>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>Angular velocity:</strong> ω = <span id="omega">0.00</span> rad/s</p>
+                        <p><strong>Angular acceleration:</strong> α = <span id="alpha">0.50</span> rad/s²</p>
+                        <p><strong>Angular momentum:</strong> L = <span id="angularMomentum">0.0</span> kg·m²/s</p>
+                        <p><strong>Rotations completed:</strong> <span id="rotations">0.00</span></p>
+                    </div>
+                </div>
+                
+                <!-- Moment of Inertia Comparison -->
+                <div class="canvas-container">
+                    <h2>Moment of Inertia: Shape Comparison</h2>
+                    <canvas id="inertiaCanvas" width="800" height="400"></canvas>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>Shape:</label>
+                            <select id="shapeSelect" onchange="updateInertiaVisualization()">
+                                <option value="disk">Solid Disk (I = ½MR²)</option>
+                                <option value="ring">Ring (I = MR²)</option>
+                                <option value="sphere">Solid Sphere (I = ⅖MR²)</option>
+                                <option value="rod-center">Rod through center (I = 1/12 ML²)</option>
+                                <option value="rod-end">Rod through end (I = ⅓ML²)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Mass:</label>
+                            <input type="range" id="shapeMass" min="1" max="10" value="5" oninput="updateInertiaVisualization()">
+                            <span id="massValue">5</span> kg
+                        </div>
+                        <div class="control-group">
+                            <label>Radius/Length:</label>
+                            <input type="range" id="shapeRadius" min="0.5" max="2" step="0.1" value="1" oninput="updateInertiaVisualization()">
+                            <span id="radiusValue">1.0</span> m
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>Moment of Inertia:</strong> I = <span id="momentValue">2.5</span> kg·m²</p>
+                        <p><strong>Formula:</strong> <span id="formulaDisplay">I = ½MR²</span></p>
+                    </div>
+                </div>
+                
+                <!-- Rolling Motion -->
+                <div class="canvas-container">
+                    <h2>Rolling Motion Down an Incline</h2>
+                    <canvas id="rollingCanvas" width="800" height="400"></canvas>
+                    <div class="controls">
+                        <div class="control-group">
+                            <label>Object Type:</label>
+                            <select id="rollingObject" onchange="updateRollingParams()">
+                                <option value="solid-cylinder">Solid Cylinder (I = ½MR²)</option>
+                                <option value="hollow-cylinder">Hollow Cylinder (I = MR²)</option>
+                                <option value="solid-sphere">Solid Sphere (I = ⅖MR²)</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label>Incline Angle:</label>
+                            <input type="range" id="inclineAngle" min="10" max="45" value="30" oninput="updateRollingParams()">
+                            <span id="angleDisplay">30</span>°
+                        </div>
+                        <button onclick="startRolling()">▶ Start</button>
+                        <button onclick="resetRolling()">🔄 Reset</button>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>Velocity:</strong> v = <span id="rollingVelocity">0.0</span> m/s</p>
+                        <p><strong>KE (trans):</strong> <span id="keTranslational">0</span> J</p>
+                        <p><strong>KE (rot):</strong> <span id="keRotational">0</span> J</p>
+                        <p><strong>Ratio KE_rot/KE_trans:</strong> <span id="keRatio">0</span></p>
+                    </div>
+                </div>
+                
+                <!-- Angular Momentum Conservation -->
+                <div class="canvas-container">
+                    <h2>Conservation of Angular Momentum</h2>
+                    <canvas id="conservationCanvas" width="600" height="600"></canvas>
+                    <div class="controls">
+                        <p>Watch as the spinning object's moment of inertia changes (arms pulled in)</p>
+                        <div class="control-group">
+                            <label>Radius multiplier:</label>
+                            <input type="range" id="radiusMultiplier" min="0.3" max="1" step="0.05" value="1" oninput="updateConservation()">
+                            <span id="radiusMultDisplay">1.0</span>
+                        </div>
+                        <button onclick="toggleConservationAnimation()">⏯ Play/Pause</button>
+                        <button onclick="resetConservation()">🔄 Reset</button>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>Initial:</strong> I₁ = <span id="I1">4.0</span> kg·m², ω₁ = <span id="omega1">2.0</span> rad/s</p>
+                        <p><strong>Current:</strong> I₂ = <span id="I2">4.0</span> kg·m², ω₂ = <span id="omega2">2.0</span> rad/s</p>
+                        <p><strong>Angular momentum:</strong> L = <span id="angMom">8.0</span> kg·m²/s (conserved!)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PRACTICE TAB -->
+            <div id="practice" class="tab-content">
+                <h1 style="color: #f5576c; margin-bottom: 20px;">Practice Questions</h1>
+                <div class="score-display" id="scoreDisplay">Score: 0/11</div>
+                
+                <!-- Question 1 -->
+                <div class="question-card" id="q1">
+                    <div class="question-header">
+                        <span class="question-number">Question 1</span>
+                        <span>25M.1A.HL.TZ1.7</span>
+                    </div>
+                    <div class="question-text">
+                        A system of moment of inertia <em>I</em> rotates from rest about a given axis. The angular acceleration α is constant.<br><br>
+                        What is the change in angular momentum when the system has made <strong>four complete rotations</strong>?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q1', 'A')">A. 2I√(2πα)</div>
+                        <div class="option" onclick="selectOption('q1', 'B')">B. 4I√(πα)</div>
+                        <div class="option" onclick="selectOption('q1', 'C')">C. 2I√(2α)</div>
+                        <div class="option" onclick="selectOption('q1', 'D')">D. 4I√α</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q1')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q1', 'B')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q1-hint">
+                        <strong>Hint:</strong> Use ω² = ω₀² + 2αθ. Four rotations = 8π radians. Then ΔL = Iω - 0.
+                    </div>
+                    <div class="answer-box" id="q1-answer">
+                        <strong>Answer: B (4I√(πα))</strong><br>
+                        <strong>Explanation:</strong><br>
+                        θ = 4 × 2π = 8π rad<br>
+                        ω² = 0 + 2α(8π) = 16πα<br>
+                        ω = 4√(πα)<br>
+                        ΔL = Iω - 0 = I × 4√(πα) = 4I√(πα)
+                    </div>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="question-card" id="q2">
+                    <div class="question-header">
+                        <span class="question-number">Question 2</span>
+                        <span>25M.1A.HL.TZ1.8</span>
+                    </div>
+                    <div class="question-text">
+                        Two small spheres each of mass 10 kg are 8.0 m apart and connected by a rod of negligible mass. The system rotates about an axis halfway along the rod and perpendicular to it.<br><br>
+                        <svg width="300" height="100" style="display: block; margin: 20px auto;">
+                            <line x1="50" y1="50" x2="250" y2="50" stroke="#333" stroke-width="3"/>
+                            <circle cx="50" cy="50" r="20" fill="#f093fb"/>
+                            <circle cx="250" cy="50" r="20" fill="#f093fb"/>
+                            <line x1="150" y1="30" x2="150" y2="70" stroke="#666" stroke-width="2"/>
+                            <text x="150" y="20" text-anchor="middle" font-size="12">axis</text>
+                            <text x="150" y="95" text-anchor="middle" font-size="14">8.0 m</text>
+                            <line x1="50" y1="85" x2="250" y2="85" stroke="#666" stroke-width="1"/>
+                            <line x1="50" y1="80" x2="50" y2="90" stroke="#666" stroke-width="1"/>
+                            <line x1="250" y1="80" x2="250" y2="90" stroke="#666" stroke-width="1"/>
+                        </svg>
+                        What is the moment of inertia of the system?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q2', 'A')">A. 160 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'B')">B. 320 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'C')">C. 640 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'D')">D. 1280 kg·m²</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q2')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q2', 'B')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q2-hint">
+                        <strong>Hint:</strong> Each sphere is 4.0 m from the axis. I = Σ mr². Don't forget there are TWO spheres!
+                    </div>
+                    <div class="answer-box" id="q2-answer">
+                        <strong>Answer: B (320 kg·m²)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        Each sphere is r = 4.0 m from the axis<br>
+                        I = 2 × m × r² = 2 × 10 × 4.0² = 2 × 10 × 16 = 320 kg·m²
+                    </div>
+                </div>
+                
+                <!-- Question 3 -->
+                <div class="question-card" id="q3">
+                    <div class="question-header">
+                        <span class="question-number">Question 3</span>
+                        <span>25M.1A.HL.TZ2.6</span>
+                    </div>
+                    <div class="question-text">
+                        A wheel, initially at rest, rolls without slipping down an incline for 4.0 s. The final angular velocity is 5π rad/s.<br><br>
+                        How many revolutions did the wheel complete?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q3', 'A')">A. 5</div>
+                        <div class="option" onclick="selectOption('q3', 'B')">B. 10</div>
+                        <div class="option" onclick="selectOption('q3', 'C')">C. 15</div>
+                        <div class="option" onclick="selectOption('q3', 'D')">D. 30</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q3')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q3', 'A')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q3-hint">
+                        <strong>Hint:</strong> Use θ = ½(ω₀ + ω)t. Then convert radians to revolutions (÷ 2π).
+                    </div>
+                    <div class="answer-box" id="q3-answer">
+                        <strong>Answer: A (5 revolutions)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        θ = ½(0 + 5π) × 4.0 = 10π rad<br>
+                        Number of revolutions = 10π / 2π = 5
+                    </div>
+                </div>
+                
+                <!-- Question 4 -->
+                <div class="question-card" id="q4">
+                    <div class="question-header">
+                        <span class="question-number">Question 4</span>
+                        <span>25M.1A.HL.TZ2.8</span>
+                    </div>
+                    <div class="question-text">
+                        A car of total mass <em>M</em> travels at constant speed <em>v</em>. Each of the four wheels has mass <em>m</em> and radius <em>R</em> and rolls without slipping. The moment of inertia of each wheel is I = ½mR².<br><br>
+                        What is the ratio: <strong>(sum of rotational KE of all four wheels) / (translational KE of car)</strong>?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q4', 'A')">A. m/(2M)</div>
+                        <div class="option" onclick="selectOption('q4', 'B')">B. m/M</div>
+                        <div class="option" onclick="selectOption('q4', 'C')">C. 2m/M</div>
+                        <div class="option" onclick="selectOption('q4', 'D')">D. 4m/M</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q4')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q4', 'C')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q4-hint">
+                        <strong>Hint:</strong> KE_rot (one wheel) = ½Iω² = ½(½mR²)(v/R)² = ¼mv². Multiply by 4 wheels. Compare to ½Mv².
+                    </div>
+                    <div class="answer-box" id="q4-answer">
+                        <strong>Answer: C (2m/M)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        For one wheel: KE_rot = ½ × ½mR² × (v/R)² = ¼mv²<br>
+                        For four wheels: KE_rot(total) = 4 × ¼mv² = mv²<br>
+                        Car translational KE: KE_trans = ½Mv²<br>
+                        Ratio = mv² / (½Mv²) = 2m/M
+                    </div>
+                </div>
+                
+                <!-- Question 5 -->
+                <div class="question-card" id="q5">
+                    <div class="question-header">
+                        <span class="question-number">Question 5</span>
+                        <span>25M.1A.HL.TZ3.7</span>
+                    </div>
+                    <div class="question-text">
+                        A solid cylinder of mass <em>m</em> and radius <em>r</em> is released from rest on an inclined plane. The cylinder rolls without slipping. The moment of inertia is I = ½mr². The speed when it reaches the bottom is <em>v</em>.<br><br>
+                        What is the vertical height from which the cylinder was released?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q5', 'A')">A. v²/g</div>
+                        <div class="option" onclick="selectOption('q5', 'B')">B. 3v²/(4g)</div>
+                        <div class="option" onclick="selectOption('q5', 'C')">C. v²/(2g)</div>
+                        <div class="option" onclick="selectOption('q5', 'D')">D. v²/(4g)</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q5')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q5', 'B')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q5-hint">
+                        <strong>Hint:</strong> Energy: mgh = ½mv² + ½Iω² = ½mv² + ½(½mr²)(v/r)² = ½mv² + ¼mv²
+                    </div>
+                    <div class="answer-box" id="q5-answer">
+                        <strong>Answer: B (3v²/(4g))</strong><br>
+                        <strong>Explanation:</strong><br>
+                        mgh = ½mv² + ½ × ½mr² × (v/r)²<br>
+                        mgh = ½mv² + ¼mv² = ¾mv²<br>
+                        h = 3v²/(4g)
+                    </div>
+                </div>
+                
+                <!-- Question 6 -->
+                <div class="question-card" id="q6">
+                    <div class="question-header">
+                        <span class="question-number">Question 6</span>
+                        <span>25M.1A.HL.TZ3.8</span>
+                    </div>
+                    <div class="question-text">
+                        Two spheres, X and Y, are spinning with the same rotational kinetic energy. The moment of inertia of X is I_X and that of Y is I_Y.<br><br>
+                        What is (angular momentum of X) / (angular momentum of Y)?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q6', 'A')">A. √(I_X/I_Y)</div>
+                        <div class="option" onclick="selectOption('q6', 'B')">B. √(I_Y/I_X)</div>
+                        <div class="option" onclick="selectOption('q6', 'C')">C. I_X/I_Y</div>
+                        <div class="option" onclick="selectOption('q6', 'D')">D. I_Y/I_X</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q6')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q6', 'A')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q6-hint">
+                        <strong>Hint:</strong> If KE = ½Iω² is the same, then L = Iω = √(2I × KE). So L ∝ √I.
+                    </div>
+                    <div class="answer-box" id="q6-answer">
+                        <strong>Answer: A (√(I_X/I_Y))</strong><br>
+                        <strong>Explanation:</strong><br>
+                        KE_X = KE_Y → ½I_X ω_X² = ½I_Y ω_Y²<br>
+                        L = Iω and KE = ½Iω² → L = √(2I × KE)<br>
+                        Since KE is the same: L_X/L_Y = √(I_X/I_Y)
+                    </div>
+                </div>
+                
+                <!-- Question 7 -->
+                <div class="question-card" id="q7">
+                    <div class="question-header">
+                        <span class="question-number">Question 7</span>
+                        <span>SPM.1A.HL.TZ0.4</span>
+                    </div>
+                    <div class="question-text">
+                        A disc of mass M and radius R is on a horizontal frictionless table. Two equal and opposite forces, each of magnitude F, act on the disc as shown. The moment of inertia of the disc about its axis is ½MR².<br><br>
+                        <svg width="200" height="200" style="display: block; margin: 20px auto;">
+                            <circle cx="100" cy="100" r="60" fill="#ddd" stroke="#333" stroke-width="2"/>
+                            <circle cx="100" cy="100" r="3" fill="#333"/>
+                            <text x="100" y="105" text-anchor="middle" font-size="10">axis</text>
+                            <!-- Force arrows -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#f5576c"/>
+                                </marker>
+                            </defs>
+                            <line x1="100" y1="30" x2="100" y2="0" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <text x="110" y="15" font-size="14" fill="#f5576c" font-weight="bold">F</text>
+                            <line x1="100" y1="170" x2="100" y2="200" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <text x="110" y="195" font-size="14" fill="#f5576c" font-weight="bold">F</text>
+                        </svg>
+                        What is the angular acceleration of the disc?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q7', 'A')">A. 0</div>
+                        <div class="option" onclick="selectOption('q7', 'B')">B. F/(MR)</div>
+                        <div class="option" onclick="selectOption('q7', 'C')">C. 2F/(MR)</div>
+                        <div class="option" onclick="selectOption('q7', 'D')">D. 4F/(MR)</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q7')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q7', 'D')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q7-hint">
+                        <strong>Hint:</strong> This is a couple (two equal & opposite forces). Total torque = F × d where d is the perpendicular distance between the forces. Here d = 2R.
+                    </div>
+                    <div class="answer-box" id="q7-answer">
+                        <strong>Answer: D (4F/(MR))</strong><br>
+                        <strong>Explanation:</strong><br>
+                        The two forces form a couple with perpendicular distance d = 2R<br>
+                        Total torque: τ = F × 2R = 2FR<br>
+                        τ = Iα → 2FR = ½MR² × α<br>
+                        α = 4FR/(MR²) = 4F/(MR)
+                    </div>
+                </div>
+                
+                <!-- Question 8 -->
+                <div class="question-card" id="q8">
+                    <div class="question-header">
+                        <span class="question-number">Question 8</span>
+                        <span>EXE.1A.HL.TZ0.5</span>
+                    </div>
+                    <div class="question-text">
+                        What are the fundamental SI units for angular impulse?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q8', 'A')">A. kg·m·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q8', 'B')">B. kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q8', 'C')">C. kg·m·s⁻²</div>
+                        <div class="option" onclick="selectOption('q8', 'D')">D. kg·m²·s⁻²</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q8')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q8', 'B')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q8-hint">
+                        <strong>Hint:</strong> Angular impulse = ΔL = Δ(Iω). What are the units of I and ω?
+                    </div>
+                    <div class="answer-box" id="q8-answer">
+                        <strong>Answer: B (kg·m²·s⁻¹)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        Angular impulse = change in angular momentum = ΔL<br>
+                        L = Iω where I has units kg·m² and ω has units s⁻¹<br>
+                        Therefore L has units kg·m²·s⁻¹
+                    </div>
+                </div>
+                
+                <!-- Question 9 -->
+                <div class="question-card" id="q9">
+                    <div class="question-header">
+                        <span class="question-number">Question 9</span>
+                        <span>EXE.1A.HL.TZ0.6</span>
+                    </div>
+                    <div class="question-text">
+                        A flywheel of moment of inertia 0.50 kg·m² rotates anti-clockwise with an initial angular velocity of 15 rad/s. A torque is applied and its angular velocity changes to 25 rad/s rotating clockwise.<br><br>
+                        What is the angular impulse delivered to the flywheel?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q9', 'A')">A. 5.0 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'B')">B. 10 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'C')">C. 20 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'D')">D. 40 N·m·s</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q9')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q9', 'C')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q9-hint">
+                        <strong>Hint:</strong> Direction changes! If anti-clockwise is +15, then clockwise is -25. ΔL = I(ω_f - ω_i). Magnitude is |ΔL|.
+                    </div>
+                    <div class="answer-box" id="q9-answer">
+                        <strong>Answer: C (20 N·m·s)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        Let anti-clockwise be positive: ω_i = +15 rad/s<br>
+                        Clockwise is negative: ω_f = -25 rad/s<br>
+                        ΔL = I(ω_f - ω_i) = 0.50 × (-25 - 15) = 0.50 × (-40) = -20 kg·m²/s<br>
+                        Magnitude: |ΔL| = 20 N·m·s
+                    </div>
+                </div>
+                
+                <!-- Question 10 -->
+                <div class="question-card" id="q10">
+                    <div class="question-header">
+                        <span class="question-number">Question 10</span>
+                        <span>EXE.1A.HL.TZ0.7</span>
+                    </div>
+                    <div class="question-text">
+                        A constant torque acts on a bicycle wheel. The wheel accelerates from rest to a final angular velocity of 16 rad/s in 4.0 s.<br><br>
+                        What is the angular displacement of the wheel during the acceleration?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q10', 'A')">A. 16 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'B')">B. 32 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'C')">C. 48 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'D')">D. 64 rad</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q10')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q10', 'B')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q10-hint">
+                        <strong>Hint:</strong> Use θ = ½(ω₀ + ω)t for constant acceleration.
+                    </div>
+                    <div class="answer-box" id="q10-answer">
+                        <strong>Answer: B (32 rad)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        θ = ½(ω₀ + ω)t = ½(0 + 16) × 4.0 = 8 × 4.0 = 32 rad
+                    </div>
+                </div>
+                
+                <!-- Question 11 -->
+                <div class="question-card" id="q11">
+                    <div class="question-header">
+                        <span class="question-number">Question 11</span>
+                        <span>EXE.1A.HL.TZ0.10</span>
+                    </div>
+                    <div class="question-text">
+                        An object with moment of inertia 12 kg·m² is rotating about its axis with angular speed 15 rad/s. A torque is applied so that its angular speed increases to 50 rad/s.<br><br>
+                        What angular impulse acted on the object?
+                    </div>
+                    <div class="options">
+                        <div class="option" onclick="selectOption('q11', 'A')">A. 420 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'B')">B. 780 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'C')">C. 390 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'D')">D. 210 kg·m²·s⁻¹</div>
+                    </div>
+                    <div class="button-group">
+                        <button onclick="showHint('q11')">💡 Show Hint</button>
+                        <button onclick="checkAnswer('q11', 'A')">✓ Check Answer</button>
+                    </div>
+                    <div class="hint-box" id="q11-hint">
+                        <strong>Hint:</strong> Angular impulse = ΔL = I(ω_f - ω_i). Simple calculation.
+                    </div>
+                    <div class="answer-box" id="q11-answer">
+                        <strong>Answer: A (420 kg·m²·s⁻¹)</strong><br>
+                        <strong>Explanation:</strong><br>
+                        Angular impulse = ΔL = I(ω_f - ω_i)<br>
+                        = 12 × (50 - 15) = 12 × 35 = 420 kg·m²·s⁻¹
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 40px 0; padding: 30px; background: linear-gradient(135deg, #f093fb22 0%, #f5576c22 100%); border-radius: 10px;">
+                    <h2 style="color: #f5576c;">🎉 Practice Complete!</h2>
+                    <p style="font-size: 1.2em; margin-top: 15px;">Review the theory and visualizations to master rotational dynamics.</p>
+                    <button onclick="resetAllQuestions()" style="margin-top: 20px; font-size: 1.1em; padding: 12px 30px;">🔄 Reset All Questions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab Management
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Score tracking
+        let score = 0;
+        let answered = new Set();
+        
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = `Score: ${score}/11`;
+        }
+        
+        // Question handling
+        function selectOption(questionId, option) {
+            const options = document.querySelectorAll(`#${questionId} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+        
+        function showHint(questionId) {
+            const hint = document.getElementById(`${questionId}-hint`);
+            hint.classList.toggle('show');
+        }
+        
+        function checkAnswer(questionId, correctAnswer) {
+            const selected = document.querySelector(`#${questionId} .option.selected`);
+            if (!selected) {
+                alert('Please select an answer first!');
+                return;
+            }
+            
+            const options = document.querySelectorAll(`#${questionId} .option`);
+            options.forEach((opt, idx) => {
+                const letter = ['A', 'B', 'C', 'D'][idx];
+                if (letter === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (opt.classList.contains('selected')) {
+                    opt.classList.add('incorrect');
+                }
+                opt.style.pointerEvents = 'none';
+            });
+            
+            const answerBox = document.getElementById(`${questionId}-answer`);
+            answerBox.classList.add('show');
+            
+            if (!answered.has(questionId)) {
+                const selectedLetter = ['A', 'B', 'C', 'D'][Array.from(options).indexOf(selected)];
+                if (selectedLetter === correctAnswer) {
+                    score++;
+                    updateScore();
+                }
+                answered.add(questionId);
+            }
+        }
+        
+        function resetAllQuestions() {
+            for (let i = 1; i <= 11; i++) {
+                const qId = `q${i}`;
+                const options = document.querySelectorAll(`#${qId} .option`);
+                options.forEach(opt => {
+                    opt.classList.remove('selected', 'correct', 'incorrect');
+                    opt.style.pointerEvents = 'auto';
+                });
+                document.getElementById(`${qId}-hint`).classList.remove('show');
+                document.getElementById(`${qId}-answer`).classList.remove('show');
+            }
+            score = 0;
+            answered.clear();
+            updateScore();
+        }
+        
+        // ===== ROTATING DISK VISUALIZATION =====
+        const rotationCanvas = document.getElementById('rotationCanvas');
+        const rotationCtx = rotationCanvas.getContext('2d');
+        let rotationTime = 0;
+        let rotationTheta = 0;
+        let rotationOmega = 0;
+        let rotationAnimating = false;
+        
+        function updateRotationLabel() {
+            document.getElementById('torqueValue').textContent = document.getElementById('torque').value;
+            document.getElementById('inertiaValue').textContent = document.getElementById('inertia').value;
+            
+            const tau = parseFloat(document.getElementById('torque').value);
+            const I = parseFloat(document.getElementById('inertia').value);
+            const alpha = tau / I;
+            document.getElementById('alpha').textContent = alpha.toFixed(2);
+        }
+        
+        function drawRotation() {
+            const tau = parseFloat(document.getElementById('torque').value);
+            const I = parseFloat(document.getElementById('inertia').value);
+            const alpha = tau / I;
+            
+            rotationCtx.clearRect(0, 0, rotationCanvas.width, rotationCanvas.height);
+            
+            const centerX = rotationCanvas.width / 2;
+            const centerY = rotationCanvas.height / 2;
+            const radius = 150;
+            
+            // Draw disk
+            rotationCtx.fillStyle = '#f093fb';
+            rotationCtx.beginPath();
+            rotationCtx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+            rotationCtx.fill();
+            
+            // Draw radius line
+            rotationCtx.strokeStyle = 'white';
+            rotationCtx.lineWidth = 4;
+            rotationCtx.beginPath();
+            rotationCtx.moveTo(centerX, centerY);
+            rotationCtx.lineTo(centerX + radius * Math.cos(rotationTheta), 
+                               centerY + radius * Math.sin(rotationTheta));
+            rotationCtx.stroke();
+            
+            // Draw center
+            rotationCtx.fillStyle = 'white';
+            rotationCtx.beginPath();
+            rotationCtx.arc(centerX, centerY, 8, 0, Math.PI * 2);
+            rotationCtx.fill();
+            
+            // Draw force arrows
+            const arrowLength = 80;
+            const arrowStart = radius + 30;
+            
+            if (tau > 0) {
+                // Torque arrows (counterclockwise)
+                drawArrow(rotationCtx, centerX, centerY - arrowStart, 
+                         centerX + arrowLength, centerY - arrowStart, '#f5576c', 3);
+                drawArrow(rotationCtx, centerX, centerY + arrowStart, 
+                         centerX - arrowLength, centerY + arrowStart, '#f5576c', 3);
+            } else if (tau < 0) {
+                // Torque arrows (clockwise)
+                drawArrow(rotationCtx, centerX, centerY - arrowStart, 
+                         centerX - arrowLength, centerY - arrowStart, '#f5576c', 3);
+                drawArrow(rotationCtx, centerX, centerY + arrowStart, 
+                         centerX + arrowLength, centerY + arrowStart, '#f5576c', 3);
+            }
+            
+            // Update values
+            document.getElementById('omega').textContent = rotationOmega.toFixed(2);
+            const L = I * rotationOmega;
+            document.getElementById('angularMomentum').textContent = L.toFixed(1);
+            const rotations = rotationTheta / (2 * Math.PI);
+            document.getElementById('rotations').textContent = rotations.toFixed(2);
+        }
+        
+        function drawArrow(ctx, fromX, fromY, toX, toY, color, width) {
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = width;
+            
+            const headLength = 15;
+            const dx = toX - fromX;
+            const dy = toY - fromY;
+            const angle = Math.atan2(dy, dx);
+            
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6),
+                      toY - headLength * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6),
+                      toY - headLength * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        function animateRotation() {
+            if (rotationAnimating) {
+                const tau = parseFloat(document.getElementById('torque').value);
+                const I = parseFloat(document.getElementById('inertia').value);
+                const alpha = tau / I;
+                const dt = 0.05;
+                
+                rotationOmega += alpha * dt;
+                rotationTheta += rotationOmega * dt;
+                
+                drawRotation();
+                requestAnimationFrame(animateRotation);
+            }
+        }
+        
+        function toggleRotationAnimation() {
+            rotationAnimating = !rotationAnimating;
+            if (rotationAnimating) animateRotation();
+        }
+        
+        function resetRotation() {
+            rotationTime = 0;
+            rotationTheta = 0;
+            rotationOmega = 0;
+            drawRotation();
+        }
+        
+        // ===== MOMENT OF INERTIA VISUALIZATION =====
+        const inertiaCanvas = document.getElementById('inertiaCanvas');
+        const inertiaCtx = inertiaCanvas.getContext('2d');
+        
+        function updateInertiaVisualization() {
+            const shape = document.getElementById('shapeSelect').value;
+            const M = parseFloat(document.getElementById('shapeMass').value);
+            const R = parseFloat(document.getElementById('shapeRadius').value);
+            
+            document.getElementById('massValue').textContent = M;
+            document.getElementById('radiusValue').textContent = R.toFixed(1);
+            
+            let I, formula;
+            
+            switch(shape) {
+                case 'disk':
+                    I = 0.5 * M * R * R;
+                    formula = 'I = ½MR²';
+                    break;
+                case 'ring':
+                    I = M * R * R;
+                    formula = 'I = MR²';
+                    break;
+                case 'sphere':
+                    I = 0.4 * M * R * R;
+                    formula = 'I = ⅖MR²';
+                    break;
+                case 'rod-center':
+                    I = (1/12) * M * (2*R) * (2*R);
+                    formula = 'I = 1/12 ML²';
+                    break;
+                case 'rod-end':
+                    I = (1/3) * M * (2*R) * (2*R);
+                    formula = 'I = ⅓ML²';
+                    break;
+            }
+            
+            document.getElementById('momentValue').textContent = I.toFixed(2);
+            document.getElementById('formulaDisplay').textContent = formula;
+            
+            drawInertiaShape(shape, M, R);
+        }
+        
+        function drawInertiaShape(shape, M, R) {
+            inertiaCtx.clearRect(0, 0, inertiaCanvas.width, inertiaCanvas.height);
+            
+            const centerX = inertiaCanvas.width / 2;
+            const centerY = inertiaCanvas.height / 2;
+            const scale = 100;
+            
+            inertiaCtx.strokeStyle = '#333';
+            inertiaCtx.lineWidth = 2;
+            
+            // Draw axis
+            inertiaCtx.strokeStyle = '#999';
+            inertiaCtx.setLineDash([5, 5]);
+            inertiaCtx.beginPath();
+            inertiaCtx.moveTo(centerX, centerY - 150);
+            inertiaCtx.lineTo(centerX, centerY + 150);
+            inertiaCtx.stroke();
+            inertiaCtx.setLineDash([]);
+            
+            switch(shape) {
+                case 'disk':
+                    inertiaCtx.fillStyle = '#f093fb';
+                    inertiaCtx.beginPath();
+                    inertiaCtx.arc(centerX, centerY, R * scale, 0, Math.PI * 2);
+                    inertiaCtx.fill();
+                    inertiaCtx.strokeStyle = '#333';
+                    inertiaCtx.stroke();
+                    break;
+                    
+                case 'ring':
+                    inertiaCtx.strokeStyle = '#f093fb';
+                    inertiaCtx.lineWidth = 15;
+                    inertiaCtx.beginPath();
+                    inertiaCtx.arc(centerX, centerY, R * scale, 0, Math.PI * 2);
+                    inertiaCtx.stroke();
+                    break;
+                    
+                case 'sphere':
+                    const gradient = inertiaCtx.createRadialGradient(
+                        centerX - R * scale / 3, centerY - R * scale / 3, 0,
+                        centerX, centerY, R * scale
+                    );
+                    gradient.addColorStop(0, '#ffffff');
+                    gradient.addColorStop(1, '#f093fb');
+                    inertiaCtx.fillStyle = gradient;
+                    inertiaCtx.beginPath();
+                    inertiaCtx.arc(centerX, centerY, R * scale, 0, Math.PI * 2);
+                    inertiaCtx.fill();
+                    inertiaCtx.strokeStyle = '#333';
+                    inertiaCtx.lineWidth = 2;
+                    inertiaCtx.stroke();
+                    break;
+                    
+                case 'rod-center':
+                    inertiaCtx.fillStyle = '#f093fb';
+                    inertiaCtx.fillRect(centerX - 10, centerY - R * scale, 
+                                       20, 2 * R * scale);
+                    inertiaCtx.strokeStyle = '#333';
+                    inertiaCtx.strokeRect(centerX - 10, centerY - R * scale, 
+                                         20, 2 * R * scale);
+                    break;
+                    
+                case 'rod-end':
+                    inertiaCtx.fillStyle = '#f093fb';
+                    inertiaCtx.fillRect(centerX - 10, centerY, 
+                                       20, 2 * R * scale);
+                    inertiaCtx.strokeStyle = '#333';
+                    inertiaCtx.strokeRect(centerX - 10, centerY, 
+                                         20, 2 * R * scale);
+                    break;
+            }
+            
+            // Label
+            inertiaCtx.fillStyle = '#333';
+            inertiaCtx.font = '14px Arial';
+            inertiaCtx.fillText('Rotation axis', centerX + 10, centerY - 160);
+        }
+        
+        // ===== ROLLING MOTION VISUALIZATION =====
+        const rollingCanvas = document.getElementById('rollingCanvas');
+        const rollingCtx = rollingCanvas.getContext('2d');
+        let rollingX = 100;
+        let rollingV = 0;
+        let rollingTheta = 0;
+        let rollingAnimating = false;
+        
+        function updateRollingParams() {
+            document.getElementById('angleDisplay').textContent = 
+                document.getElementById('inclineAngle').value;
+        }
+        
+        function drawRolling() {
+            const objType = document.getElementById('rollingObject').value;
+            const angle = parseFloat(document.getElementById('inclineAngle').value) * Math.PI / 180;
+            
+            rollingCtx.clearRect(0, 0, rollingCanvas.width, rollingCanvas.height);
+            
+            // Draw incline
+            rollingCtx.strokeStyle = '#333';
+            rollingCtx.fillStyle = '#e0e0e0';
+            rollingCtx.lineWidth = 3;
+            rollingCtx.beginPath();
+            rollingCtx.moveTo(50, 350);
+            rollingCtx.lineTo(750, 350);
+            rollingCtx.lineTo(750, 350 - 700 * Math.tan(angle));
+            rollingCtx.closePath();
+            rollingCtx.fill();
+            rollingCtx.stroke();
+            
+            // Draw rolling object
+            const radius = 30;
+            const yPos = 350 - (rollingX - 50) * Math.tan(angle) - radius;
+            
+            rollingCtx.save();
+            rollingCtx.translate(rollingX, yPos);
+            rollingCtx.rotate(rollingTheta);
+            
+            rollingCtx.fillStyle = '#f093fb';
+            rollingCtx.strokeStyle = '#333';
+            rollingCtx.lineWidth = 2;
+            rollingCtx.beginPath();
+            rollingCtx.arc(0, 0, radius, 0, Math.PI * 2);
+            rollingCtx.fill();
+            rollingCtx.stroke();
+            
+            // Draw radius line
+            rollingCtx.strokeStyle = 'white';
+            rollingCtx.lineWidth = 3;
+            rollingCtx.beginPath();
+            rollingCtx.moveTo(0, 0);
+            rollingCtx.lineTo(radius, 0);
+            rollingCtx.stroke();
+            
+            rollingCtx.restore();
+            
+            // Update energy displays
+            const m = 2; // kg
+            const g = 9.8;
+            const h = (rollingX - 50) * Math.tan(angle) / 100; // Convert to meters
+            
+            let keFactor;
+            switch(objType) {
+                case 'solid-cylinder':
+                    keFactor = 1.5;
+                    break;
+                case 'hollow-cylinder':
+                    keFactor = 2;
+                    break;
+                case 'solid-sphere':
+                    keFactor = 1.4;
+                    break;
+            }
+            
+            const totalKE = m * g * h;
+            const keTrans = totalKE / keFactor;
+            const keRot = totalKE - keTrans;
+            
+            document.getElementById('rollingVelocity').textContent = rollingV.toFixed(1);
+            document.getElementById('keTranslational').textContent = keTrans.toFixed(1);
+            document.getElementById('keRotational').textContent = keRot.toFixed(1);
+            document.getElementById('keRatio').textContent = (keRot / keTrans).toFixed(2);
+        }
+        
+        function startRolling() {
+            if (!rollingAnimating) {
+                rollingAnimating = true;
+                animateRolling();
+            }
+        }
+        
+        function animateRolling() {
+            if (rollingAnimating && rollingX < 700) {
+                const angle = parseFloat(document.getElementById('inclineAngle').value) * Math.PI / 180;
+                const g = 9.8;
+                const a = g * Math.sin(angle) / 1.5; // For solid cylinder
+                
+                rollingV += a * 0.1;
+                rollingX += rollingV * 0.1;
+                rollingTheta += rollingV * 0.1 / 30; // radius = 30
+                
+                drawRolling();
+                requestAnimationFrame(animateRolling);
+            } else {
+                rollingAnimating = false;
+            }
+        }
+        
+        function resetRolling() {
+            rollingX = 100;
+            rollingV = 0;
+            rollingTheta = 0;
+            rollingAnimating = false;
+            drawRolling();
+        }
+        
+        // ===== ANGULAR MOMENTUM CONSERVATION =====
+        const conservationCanvas = document.getElementById('conservationCanvas');
+        const conservationCtx = conservationCanvas.getContext('2d');
+        let conservationAnimating = false;
+        let conservationTheta = 0;
+        const m = 2; // kg
+        const r0 = 2; // m
+        const I0 = 2 * m * r0 * r0;
+        const omega0 = 2; // rad/s
+        const L0 = I0 * omega0;
+        
+        function updateConservation() {
+            const mult = parseFloat(document.getElementById('radiusMultiplier').value);
+            document.getElementById('radiusMultDisplay').textContent = mult.toFixed(2);
+            
+            const r = r0 * mult;
+            const I = 2 * m * r * r;
+            const omega = L0 / I;
+            
+            document.getElementById('I1').textContent = I0.toFixed(1);
+            document.getElementById('omega1').textContent = omega0.toFixed(1);
+            document.getElementById('I2').textContent = I.toFixed(1);
+            document.getElementById('omega2').textContent = omega.toFixed(1);
+            document.getElementById('angMom').textContent = L0.toFixed(1);
+            
+            drawConservation(r, omega);
+        }
+        
+        function drawConservation(r, omega) {
+            conservationCtx.clearRect(0, 0, conservationCanvas.width, conservationCanvas.height);
+            
+            const centerX = conservationCanvas.width / 2;
+            const centerY = conservationCanvas.height / 2;
+            const scale = 60;
+            
+            // Draw axis
+            conservationCtx.strokeStyle = '#999';
+            conservationCtx.lineWidth = 2;
+            conservationCtx.setLineDash([5, 5]);
+            conservationCtx.beginPath();
+            conservationCtx.moveTo(centerX, centerY - 150);
+            conservationCtx.lineTo(centerX, centerY + 150);
+            conservationCtx.stroke();
+            conservationCtx.setLineDash([]);
+            
+            // Draw center
+            conservationCtx.fillStyle = '#f5576c';
+            conservationCtx.beginPath();
+            conservationCtx.arc(centerX, centerY, 20, 0, Math.PI * 2);
+            conservationCtx.fill();
+            
+            // Draw rotating masses
+            const angle1 = conservationTheta;
+            const angle2 = conservationTheta + Math.PI;
+            
+            const x1 = centerX + r * scale * Math.cos(angle1);
+            const y1 = centerY + r * scale * Math.sin(angle1);
+            const x2 = centerX + r * scale * Math.cos(angle2);
+            const y2 = centerY + r * scale * Math.sin(angle2);
+            
+            // Draw arms
+            conservationCtx.strokeStyle = '#333';
+            conservationCtx.lineWidth = 4;
+            conservationCtx.beginPath();
+            conservationCtx.moveTo(centerX, centerY);
+            conservationCtx.lineTo(x1, y1);
+            conservationCtx.stroke();
+            conservationCtx.beginPath();
+            conservationCtx.moveTo(centerX, centerY);
+            conservationCtx.lineTo(x2, y2);
+            conservationCtx.stroke();
+            
+            // Draw masses
+            conservationCtx.fillStyle = '#f093fb';
+            conservationCtx.beginPath();
+            conservationCtx.arc(x1, y1, 15, 0, Math.PI * 2);
+            conservationCtx.fill();
+            conservationCtx.beginPath();
+            conservationCtx.arc(x2, y2, 15, 0, Math.PI * 2);
+            conservationCtx.fill();
+        }
+        
+        function animateConservation() {
+            if (conservationAnimating) {
+                const mult = parseFloat(document.getElementById('radiusMultiplier').value);
+                const r = r0 * mult;
+                const I = 2 * m * r * r;
+                const omega = L0 / I;
+                
+                conservationTheta += omega * 0.05;
+                drawConservation(r, omega);
+                requestAnimationFrame(animateConservation);
+            }
+        }
+        
+        function toggleConservationAnimation() {
+            conservationAnimating = !conservationAnimating;
+            if (conservationAnimating) animateConservation();
+        }
+        
+        function resetConservation() {
+            conservationTheta = 0;
+            document.getElementById('radiusMultiplier').value = '1';
+            updateConservation();
+        }
+        
+        // Initialize visualizations
+        updateRotationLabel();
+        drawRotation();
+        updateInertiaVisualization();
+        updateRollingParams();
+        drawRolling();
+        updateConservation();
+        updateScore();
+    </script>
+</body>
+</html>
