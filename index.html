@@ -30,7 +30,7 @@
         
         header {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: pink;
+            color: white;
             padding: 30px;
             text-align: center;
         }
@@ -142,7 +142,7 @@
         
         button {
             background: #f093fb;
-            color: blue;
+            color: red;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -327,8 +327,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>⚙️ Rotational Dynamics</h1>
+            <h1>⚙️ Rotational Dynamics & Galilean Relativity</h1>
             <p>IB Physics HL Interactive Learning Tool</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Lee McCulloch-James</p>
         </header>
         
         <div class="nav-tabs">
@@ -701,10 +702,10 @@
                         What is the change in angular momentum when the system has made <strong>four complete rotations</strong>?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q1', 'A')">A. 2I√(2πα)</div>
-                        <div class="option" onclick="selectOption('q1', 'B')">B. 4I√(πα)</div>
-                        <div class="option" onclick="selectOption('q1', 'C')">C. 2I√(2α)</div>
-                        <div class="option" onclick="selectOption('q1', 'D')">D. 4I√α</div>
+                        <div class="option" onclick="selectOption('q1', 'A', this)">A. 2I√(2πα)</div>
+                        <div class="option" onclick="selectOption('q1', 'B', this)">B. 4I√(πα)</div>
+                        <div class="option" onclick="selectOption('q1', 'C', this)">C. 2I√(2α)</div>
+                        <div class="option" onclick="selectOption('q1', 'D', this)">D. 4I√α</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q1')">💡 Show Hint</button>
@@ -745,10 +746,10 @@
                         What is the moment of inertia of the system?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q2', 'A')">A. 160 kg·m²</div>
-                        <div class="option" onclick="selectOption('q2', 'B')">B. 320 kg·m²</div>
-                        <div class="option" onclick="selectOption('q2', 'C')">C. 640 kg·m²</div>
-                        <div class="option" onclick="selectOption('q2', 'D')">D. 1280 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'A', this)">A. 160 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'B', this)">B. 320 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'C', this)">C. 640 kg·m²</div>
+                        <div class="option" onclick="selectOption('q2', 'D', this)">D. 1280 kg·m²</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q2')">💡 Show Hint</button>
@@ -776,10 +777,10 @@
                         How many revolutions did the wheel complete?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q3', 'A')">A. 5</div>
-                        <div class="option" onclick="selectOption('q3', 'B')">B. 10</div>
-                        <div class="option" onclick="selectOption('q3', 'C')">C. 15</div>
-                        <div class="option" onclick="selectOption('q3', 'D')">D. 30</div>
+                        <div class="option" onclick="selectOption('q3', 'A', this)">A. 5</div>
+                        <div class="option" onclick="selectOption('q3', 'B', this)">B. 10</div>
+                        <div class="option" onclick="selectOption('q3', 'C', this)">C. 15</div>
+                        <div class="option" onclick="selectOption('q3', 'D', this)">D. 30</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q3')">💡 Show Hint</button>
@@ -807,10 +808,10 @@
                         What is the ratio: <strong>(sum of rotational KE of all four wheels) / (translational KE of car)</strong>?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q4', 'A')">A. m/(2M)</div>
-                        <div class="option" onclick="selectOption('q4', 'B')">B. m/M</div>
-                        <div class="option" onclick="selectOption('q4', 'C')">C. 2m/M</div>
-                        <div class="option" onclick="selectOption('q4', 'D')">D. 4m/M</div>
+                        <div class="option" onclick="selectOption('q4', 'A', this)">A. m/(2M)</div>
+                        <div class="option" onclick="selectOption('q4', 'B', this)">B. m/M</div>
+                        <div class="option" onclick="selectOption('q4', 'C', this)">C. 2m/M</div>
+                        <div class="option" onclick="selectOption('q4', 'D', this)">D. 4m/M</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q4')">💡 Show Hint</button>
@@ -840,10 +841,10 @@
                         What is the vertical height from which the cylinder was released?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q5', 'A')">A. v²/g</div>
-                        <div class="option" onclick="selectOption('q5', 'B')">B. 3v²/(4g)</div>
-                        <div class="option" onclick="selectOption('q5', 'C')">C. v²/(2g)</div>
-                        <div class="option" onclick="selectOption('q5', 'D')">D. v²/(4g)</div>
+                        <div class="option" onclick="selectOption('q5', 'A', this)">A. v²/g</div>
+                        <div class="option" onclick="selectOption('q5', 'B', this)">B. 3v²/(4g)</div>
+                        <div class="option" onclick="selectOption('q5', 'C', this)">C. v²/(2g)</div>
+                        <div class="option" onclick="selectOption('q5', 'D', this)">D. v²/(4g)</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q5')">💡 Show Hint</button>
@@ -872,10 +873,10 @@
                         What is (angular momentum of X) / (angular momentum of Y)?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q6', 'A')">A. √(I_X/I_Y)</div>
-                        <div class="option" onclick="selectOption('q6', 'B')">B. √(I_Y/I_X)</div>
-                        <div class="option" onclick="selectOption('q6', 'C')">C. I_X/I_Y</div>
-                        <div class="option" onclick="selectOption('q6', 'D')">D. I_Y/I_X</div>
+                        <div class="option" onclick="selectOption('q6', 'A', this)">A. √(I_X/I_Y)</div>
+                        <div class="option" onclick="selectOption('q6', 'B', this)">B. √(I_Y/I_X)</div>
+                        <div class="option" onclick="selectOption('q6', 'C', this)">C. I_X/I_Y</div>
+                        <div class="option" onclick="selectOption('q6', 'D', this)">D. I_Y/I_X</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q6')">💡 Show Hint</button>
@@ -905,24 +906,29 @@
                             <circle cx="100" cy="100" r="60" fill="#ddd" stroke="#333" stroke-width="2"/>
                             <circle cx="100" cy="100" r="3" fill="#333"/>
                             <text x="100" y="105" text-anchor="middle" font-size="10">axis</text>
-                            <!-- Force arrows -->
+                            <!-- Force arrows - TANGENTIAL (perpendicular to radii) -->
                             <defs>
                                 <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
                                     <polygon points="0 0, 10 3, 0 6" fill="#f5576c"/>
                                 </marker>
                             </defs>
-                            <line x1="100" y1="30" x2="100" y2="0" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
-                            <text x="110" y="15" font-size="14" fill="#f5576c" font-weight="bold">F</text>
-                            <line x1="100" y1="170" x2="100" y2="200" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
-                            <text x="110" y="195" font-size="14" fill="#f5576c" font-weight="bold">F</text>
+                            <!-- Top force - pointing right (tangent to circle at top) -->
+                            <line x1="70" y1="40" x2="130" y2="40" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <text x="135" y="45" font-size="14" fill="#f5576c" font-weight="bold">F</text>
+                            <!-- Bottom force - pointing left (tangent to circle at bottom) -->
+                            <line x1="130" y1="160" x2="70" y2="160" stroke="#f5576c" stroke-width="3" marker-end="url(#arrowhead)"/>
+                            <text x="55" y="165" font-size="14" fill="#f5576c" font-weight="bold">F</text>
+                            <!-- Circular arrow showing rotation direction -->
+                            <path d="M 100 50 A 50 50 0 0 1 140 90" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="3,3"/>
+                            <polygon points="142 88, 145 95, 137 93" fill="#999"/>
                         </svg>
                         What is the angular acceleration of the disc?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q7', 'A')">A. 0</div>
-                        <div class="option" onclick="selectOption('q7', 'B')">B. F/(MR)</div>
-                        <div class="option" onclick="selectOption('q7', 'C')">C. 2F/(MR)</div>
-                        <div class="option" onclick="selectOption('q7', 'D')">D. 4F/(MR)</div>
+                        <div class="option" onclick="selectOption('q7', 'A', this)">A. 0</div>
+                        <div class="option" onclick="selectOption('q7', 'B', this)">B. F/(MR)</div>
+                        <div class="option" onclick="selectOption('q7', 'C', this)">C. 2F/(MR)</div>
+                        <div class="option" onclick="selectOption('q7', 'D', this)">D. 4F/(MR)</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q7')">💡 Show Hint</button>
@@ -951,10 +957,10 @@
                         What are the fundamental SI units for angular impulse?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q8', 'A')">A. kg·m·s⁻¹</div>
-                        <div class="option" onclick="selectOption('q8', 'B')">B. kg·m²·s⁻¹</div>
-                        <div class="option" onclick="selectOption('q8', 'C')">C. kg·m·s⁻²</div>
-                        <div class="option" onclick="selectOption('q8', 'D')">D. kg·m²·s⁻²</div>
+                        <div class="option" onclick="selectOption('q8', 'A', this)">A. kg·m·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q8', 'B', this)">B. kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q8', 'C', this)">C. kg·m·s⁻²</div>
+                        <div class="option" onclick="selectOption('q8', 'D', this)">D. kg·m²·s⁻²</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q8')">💡 Show Hint</button>
@@ -983,10 +989,10 @@
                         What is the angular impulse delivered to the flywheel?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q9', 'A')">A. 5.0 N·m·s</div>
-                        <div class="option" onclick="selectOption('q9', 'B')">B. 10 N·m·s</div>
-                        <div class="option" onclick="selectOption('q9', 'C')">C. 20 N·m·s</div>
-                        <div class="option" onclick="selectOption('q9', 'D')">D. 40 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'A', this)">A. 5.0 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'B', this)">B. 10 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'C', this)">C. 20 N·m·s</div>
+                        <div class="option" onclick="selectOption('q9', 'D', this)">D. 40 N·m·s</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q9')">💡 Show Hint</button>
@@ -1016,10 +1022,10 @@
                         What is the angular displacement of the wheel during the acceleration?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q10', 'A')">A. 16 rad</div>
-                        <div class="option" onclick="selectOption('q10', 'B')">B. 32 rad</div>
-                        <div class="option" onclick="selectOption('q10', 'C')">C. 48 rad</div>
-                        <div class="option" onclick="selectOption('q10', 'D')">D. 64 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'A', this)">A. 16 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'B', this)">B. 32 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'C', this)">C. 48 rad</div>
+                        <div class="option" onclick="selectOption('q10', 'D', this)">D. 64 rad</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q10')">💡 Show Hint</button>
@@ -1046,10 +1052,10 @@
                         What angular impulse acted on the object?
                     </div>
                     <div class="options">
-                        <div class="option" onclick="selectOption('q11', 'A')">A. 420 kg·m²·s⁻¹</div>
-                        <div class="option" onclick="selectOption('q11', 'B')">B. 780 kg·m²·s⁻¹</div>
-                        <div class="option" onclick="selectOption('q11', 'C')">C. 390 kg·m²·s⁻¹</div>
-                        <div class="option" onclick="selectOption('q11', 'D')">D. 210 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'A', this)">A. 420 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'B', this)">B. 780 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'C', this)">C. 390 kg·m²·s⁻¹</div>
+                        <div class="option" onclick="selectOption('q11', 'D', this)">D. 210 kg·m²·s⁻¹</div>
                     </div>
                     <div class="button-group">
                         <button onclick="showHint('q11')">💡 Show Hint</button>
@@ -1097,10 +1103,10 @@
         }
         
         // Question handling
-        function selectOption(questionId, option) {
+        function selectOption(questionId, option, element) {
             const options = document.querySelectorAll(`#${questionId} .option`);
             options.forEach(opt => opt.classList.remove('selected'));
-            event.target.classList.add('selected');
+            element.classList.add('selected');
         }
         
         function showHint(questionId) {
@@ -1109,33 +1115,28 @@
         }
         
         function checkAnswer(questionId, correctAnswer) {
-            const selected = document.querySelector(`#${questionId} .option.selected`);
-            if (!selected) {
-                alert('Please select an answer first!');
-                return;
-            }
-            
-            const options = document.querySelectorAll(`#${questionId} .option`);
-            options.forEach((opt, idx) => {
-                const letter = ['A', 'B', 'C', 'D'][idx];
-                if (letter === correctAnswer) {
-                    opt.classList.add('correct');
-                } else if (opt.classList.contains('selected')) {
-                    opt.classList.add('incorrect');
-                }
-                opt.style.pointerEvents = 'none';
-            });
-            
-            const answerBox = document.getElementById(`${questionId}-answer`);
+            // Just show the answer box - that's it!
+            const answerBox = document.getElementById(questionId + '-answer');
             answerBox.classList.add('show');
             
+            // Update score only once
             if (!answered.has(questionId)) {
-                const selectedLetter = ['A', 'B', 'C', 'D'][Array.from(options).indexOf(selected)];
-                if (selectedLetter === correctAnswer) {
-                    score++;
-                    updateScore();
+                const selected = document.querySelector(`#${questionId} .option.selected`);
+                if (selected) {
+                    // Find which option was selected
+                    const options = document.querySelectorAll(`#${questionId} .option`);
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i] === selected) {
+                            const selectedLetter = ['A', 'B', 'C', 'D'][i];
+                            if (selectedLetter === correctAnswer) {
+                                score++;
+                            }
+                            break;
+                        }
+                    }
                 }
                 answered.add(questionId);
+                updateScore();
             }
         }
         
